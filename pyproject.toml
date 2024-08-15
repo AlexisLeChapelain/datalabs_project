@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "alexis_homework_for_datalabs"
+version = "0.1.0"
+description = "Homework for interview at Datalabs"
+authors = ["Alexis Le Chapelain <alexis.lechapelain@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+open3d = "0.18.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+pytest-sugar = "^0.9.4"
+pytest-cov = "^2.12.0"
+black = "^21.5b1"
+isort = "^5.8.0"
+pylint = "^2.8.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# The config below is consistent with black,
+# according to https://black.readthedocs.io/en/stable/compatible_configs.html#isort
+[tool.pylint.messages_control]
+# C0114: missing-module-docstring
+disable = "C0330, C0326, C0114"
+[tool.pylint.format]
+max-line-length = "88"
+
+# The config below is consistent with black,
+# according to https://black.readthedocs.io/en/stable/compatible_configs.html#isort
+# I commented out because as long as we do "isort --profile black", it works in the same way.
+# [tool.isort]
+# multi_line_output = 3
+# include_trailing_comma = true
+# force_grid_wrap = 0
+# use_parentheses = true
+# ensure_newline_before_comments = true
+# line_length = 88
+
+[tool.black]
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+#  | foo.py           # also separately exclude a file named foo.py in
+#                     # the root of the project
+)
+'''
