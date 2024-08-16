@@ -4,6 +4,7 @@ from open3d.cpu.pybind.geometry import KDTreeFlann
 
 from typing import List
 
+from tests.util import get_data_path
 from pcd_register.data_processing import projector, compute_covariance_at_index, compute_approximate_curvature, \
     data_processing_pipeline
 
@@ -72,7 +73,7 @@ def test_projector():
 
 def test_data_processing_pipeline():
 
-    pcd_path = "/Users/alexislechapelain/open3d_data/extract/DemoICPPointClouds/cloud_bin_0.pcd"
+    pcd_path, _ =  get_data_path()
     point_index = 1000
     radius = 0.01
 

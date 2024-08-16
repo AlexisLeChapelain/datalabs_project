@@ -1,7 +1,7 @@
-import copy
 import open3d as o3d
-import numpy as np
 from typing import Tuple
+
+from open3d.pipelines.registration import RegistrationResult
 
 
 def preprocess_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float
@@ -16,7 +16,7 @@ def preprocess_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float
     """
 
     # Downsample based on voxel size
-    pcd_down = pcd.voxel_down_sample(voxel_size)
+    pcd_down: o3d.geometry.PointCloud = pcd.voxel_down_sample(voxel_size)
 
     # Estimate normal with search radius equal to voxel_size * 2
     radius_normal = voxel_size * 2
@@ -24,7 +24,7 @@ def preprocess_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float
 
     # Compute FPFH feature with search radius equal to voxel_size * 5
     radius_feature = voxel_size * 5
-    pcd_fpfh = o3d.pipelines.registration.compute_fpfh_feature(
+    pcd_fpfh: o3d.pipelines.registration.Feature = o3d.pipelines.registration.compute_fpfh_feature(
         pcd_down,
         o3d.geometry.KDTreeSearchParamHybrid(radius=radius_feature, max_nn=100))
 
@@ -32,8 +32,7 @@ def preprocess_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float
 
 
 def registration_pipeline(source_path: str, target_path: str, voxel_size: float
-                          ) -> Tuple[o3d.pipelines.registration.RegistrationResult,
-                                     o3d.pipelines.registration.RegistrationResult]:
+                          ) -> Tuple[RegistrationResult, RegistrationResult]:
     """
     Pipeline to preprocess two point cloud and align the source point cloud with the target point cloud.
     Use two methodes, RANSAC and fine registration, and return both results.
@@ -73,11 +72,3 @@ def registration_pipeline(source_path: str, target_path: str, voxel_size: float
         o3d.pipelines.registration.TransformationEstimationPointToPlane())
 
     return result_ransac, result_fine_registration
-
-
-if __name__ == '__main__':
-    voxel_size = 0.05  # means 5cm for this dataset
-    source_path = "/Users/alexislechapelain/open3d_data/extract/DemoICPPointClouds/cloud_bin_0.pcd"
-    target_path = "/Users/alexislechapelain/open3d_data/extract/DemoICPPointClouds/cloud_bin_1.pcd"
-    result_ransac, result_fine_registration = registration_pipeline(source_path, target_path, voxel_size)
-
