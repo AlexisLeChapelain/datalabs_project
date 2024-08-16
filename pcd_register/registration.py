@@ -10,20 +10,20 @@ def preprocess_point_cloud(pcd: o3d.geometry.PointCloud, voxel_size: float
     Preprocess a point cloud by downsampling it, computing the normals, and then computing
     Fast Point Feature Histograms.
 
-    :param pcd: the point cloud to preprocess
-    :param voxel_size: the voxel size to use to downsample the point cloud, compute its normals and its features.
-    :return: the preprocessed point cloud and the Fast Point Feature Histograms
+    :param pcd: the point cloud to preprocess.
+    :param voxel_size: the voxel size used to downsample the point cloud, compute its normals and its features.
+    :return: the preprocessed point cloud and the Fast Point Feature Histograms.
     """
 
-    print(":: Downsample with a voxel size %.3f." % voxel_size)
+    # Downsample based on voxel size
     pcd_down = pcd.voxel_down_sample(voxel_size)
 
+    # Estimate normal with search radius equal to voxel_size * 2
     radius_normal = voxel_size * 2
-    print(":: Estimate normal with search radius %.3f." % radius_normal)
     pcd_down.estimate_normals(o3d.geometry.KDTreeSearchParamHybrid(radius=radius_normal, max_nn=30))
 
+    # Compute FPFH feature with search radius equal to voxel_size * 5
     radius_feature = voxel_size * 5
-    print(":: Compute FPFH feature with search radius %.3f." % radius_feature)
     pcd_fpfh = o3d.pipelines.registration.compute_fpfh_feature(
         pcd_down,
         o3d.geometry.KDTreeSearchParamHybrid(radius=radius_feature, max_nn=100))

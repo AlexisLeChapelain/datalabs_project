@@ -60,7 +60,7 @@ def compute_approximate_curvature(cov_matrix: np.ndarray) -> Tuple[float, np.nda
     # compute sigma square: smallest eigen value divided by sum of eigen values
     sigma_square = eigen_values[sorted_index_of_eigen_values[0]] / eigen_values.sum()
 
-    return sigma_square, normal_vector
+    return float(sigma_square), normal_vector
 
 
 def projector(point_of_origin: np.ndarray, normal: np.ndarray, target: np.ndarray) -> np.ndarray:
