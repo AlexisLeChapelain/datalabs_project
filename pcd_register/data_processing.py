@@ -133,11 +133,3 @@ def data_processing_pipeline(pcd_path: str, point_index: int, radius: float):
                                                for neighbour in neighbours])  # Broadcast and change in place
 
     return cov_matrix, sigma_square, normal_vector, pcd
-
-
-if __name__ == '__main__':
-    pcd_path = "/Users/alexislechapelain/open3d_data/extract/DemoICPPointClouds/cloud_bin_0.pcd"
-    point_index = 1000
-    radius = 0.01
-
-    data_processing_pipeline(pcd_path, point_index, radius)
