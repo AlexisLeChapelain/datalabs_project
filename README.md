@@ -111,18 +111,19 @@ Before you begin, ensure you have met the following requirements:
 
 ### OS
 
-...
+The code has been tested on MacOS
 
 ### Other software dependencies
 
-...
+You need to have poetry installed: https://python-poetry.org/docs/basic-usage/
 
 ## Installation
 
-...
+1. clone the repository
+2. In the repository folder, run: ```poetry install --no-root```. This will install all the necessary dependencies
 
 ## Usage
 
 Follow these steps:
 
-...
+1. In the repository folder, run:  ```python main.py```

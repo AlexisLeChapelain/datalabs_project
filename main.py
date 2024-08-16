@@ -20,3 +20,5 @@ if __name__ == "__main__":
     point_index = 100
     radius = 0.01
     cov_matrix, sigma_square, normal_vector, pcd = data_processing_pipeline(source_path, point_index, radius)
+
+    print("The code successfully completed.")
